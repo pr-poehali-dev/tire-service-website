@@ -173,7 +173,7 @@ export default function Index() {
                 {link.label}
               </button>
             ))}
-            <a href="tel:+79001234567" className="bg-fire px-4 py-2 rounded-lg text-white font-semibold text-sm hover-glow transition-all duration-300 hover:scale-105">
+            <a href="tel:+79605333089" className="bg-fire px-4 py-2 rounded-lg text-white font-semibold text-sm hover-glow transition-all duration-300 hover:scale-105">
               Записаться
             </a>
           </div>
@@ -195,7 +195,7 @@ export default function Index() {
                 {link.label}
               </button>
             ))}
-            <a href="tel:+79001234567" className="mt-2 bg-fire px-4 py-3 rounded-lg text-white font-semibold text-center text-sm">
+            <a href="tel:+79605333089" className="mt-2 bg-fire px-4 py-3 rounded-lg text-white font-semibold text-center text-sm">
               Записаться
             </a>
           </div>
@@ -234,10 +234,10 @@ export default function Index() {
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-in animate-delay-300" style={{ animationFillMode: "forwards" }}>
-              <a href="tel:+79001234567"
+              <a href="tel:+79605333089"
                 className="bg-fire px-8 py-4 rounded-xl text-white font-bold text-lg hover-glow transition-all duration-300 hover:scale-105 flex items-center gap-2">
                 <Icon name="Phone" size={20} />
-                +7 (900) 123-45-67
+                +7 960 533 30 89
               </a>
               <button onClick={() => scrollTo("services")}
                 className="px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
@@ -319,7 +319,7 @@ export default function Index() {
           </div>
 
           <div className="mt-8 text-center">
-            <a href="tel:+79001234567"
+            <a href="tel:+79605333089"
               className="inline-flex items-center gap-2 bg-fire px-8 py-4 rounded-xl text-white font-bold text-lg hover-glow transition-all duration-300 hover:scale-105">
               <Icon name="Phone" size={20} />
               Узнать точную цену
@@ -376,7 +376,7 @@ export default function Index() {
                 </div>
 
                 <a
-                  href="tel:+79001234567"
+                  href="tel:+79605333089"
                   className="mt-4 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90"
                   style={{ background: promo.color, color: "#fff" }}
                 >
@@ -466,48 +466,89 @@ export default function Index() {
           <div id="contacts-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("contacts-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Приезжайте к нам</div>
             <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">КОН<span className="text-gradient">ТАКТЫ</span></h2>
-            <p className="text-gray-400 text-lg">Найти нас очень легко</p>
+            <p className="text-gray-400 text-lg">Две точки в Санкт-Петербурге</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-            <div className="lg:col-span-2 flex flex-col gap-5">
-              {[
-                { icon: "MapPin", title: "Адрес", val: "Москва, ул. Автомобильная, д. 15", val2: "м. Автозаводская, 5 мин пешком" },
-                { icon: "Phone", title: "Телефон", val: "+7 (900) 123-45-67", val2: "Принимаем звонки 8:00–22:00" },
-                { icon: "Clock", title: "Режим работы", val: "Пн–Вс: 8:00 – 22:00", val2: "Без выходных и праздников" },
-                { icon: "MessageCircle", title: "WhatsApp / Telegram", val: "+7 (900) 123-45-67", val2: "Ответим в течение 5 минут" },
-              ].map((item) => (
-                <div key={item.title} className="bg-dark-card rounded-2xl p-5 flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-fire flex-shrink-0 flex items-center justify-center">
-                    <Icon name={item.icon} size={20} className="text-white" />
-                  </div>
-                  <div>
-                    <div className="text-gray-400 text-xs uppercase tracking-wider mb-1">{item.title}</div>
-                    <div className="font-semibold text-white">{item.val}</div>
-                    <div className="text-gray-500 text-sm">{item.val2}</div>
-                  </div>
+          {/* Общие контакты */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+            {[
+              { icon: "Phone", title: "Телефон", val: "+7 960 533 30 89", val2: "Принимаем звонки 8:00–22:00", href: "tel:+79605333089" },
+              { icon: "Clock", title: "Режим работы", val: "Пн–Вс: 8:00 – 22:00", val2: "Без выходных и праздников", href: null },
+              { icon: "MessageCircle", title: "WhatsApp / Telegram", val: "+7 960 533 30 89", val2: "Ответим в течение 5 минут", href: "https://wa.me/79605333089" },
+            ].map((item) => (
+              <div key={item.title} className="bg-dark-card rounded-2xl p-5 flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-fire flex-shrink-0 flex items-center justify-center">
+                  <Icon name={item.icon} size={20} className="text-white" />
                 </div>
-              ))}
+                <div>
+                  <div className="text-gray-400 text-xs uppercase tracking-wider mb-1">{item.title}</div>
+                  {item.href ? (
+                    <a href={item.href} className="font-semibold text-white hover:text-orange-400 transition-colors">{item.val}</a>
+                  ) : (
+                    <div className="font-semibold text-white">{item.val}</div>
+                  )}
+                  <div className="text-gray-500 text-sm">{item.val2}</div>
+                </div>
+              </div>
+            ))}
+          </div>
 
+          {/* Точка 1 — Автосервис */}
+          <div id="point-1" data-animate className={`mb-10 transition-all duration-700 ${visibleItems.has("point-1") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 rounded-full bg-fire flex items-center justify-center font-oswald font-bold text-white text-sm">1</div>
+              <div>
+                <h3 className="font-oswald text-2xl font-bold">АВТОСЕРВИС <span className="text-gradient">У РУСТАМА</span></h3>
+                <p className="text-gray-400 text-sm">Ржевская ул., 2Б, Санкт-Петербург</p>
+              </div>
               <a
-                href="https://yandex.ru/maps/?rtext=~55.730051,37.661042&rtt=auto"
+                href="https://yandex.ru/maps/?text=Ржевская+ул.+2Б+Санкт-Петербург&rtt=auto"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-fire px-6 py-4 rounded-xl text-white font-bold text-base hover-glow transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 mt-2"
+                className="ml-auto bg-fire px-5 py-2.5 rounded-xl text-white font-semibold text-sm hover-glow transition-all duration-300 hover:scale-105 flex items-center gap-2"
               >
-                <Icon name="Navigation" size={20} />
-                Построить маршрут
+                <Icon name="Navigation" size={16} />
+                Маршрут
               </a>
             </div>
-
-            <div id="map-block" data-animate className={`lg:col-span-3 rounded-2xl overflow-hidden transition-all duration-700 ${visibleItems.has("map-block") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-              style={{ border: "2px solid rgba(249,115,22,0.25)", height: "460px" }}>
+            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(249,115,22,0.25)", height: "320px" }}>
               <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=37.661042%2C55.730051&z=15&l=map&pt=37.661042%2C55.730051%2Cpm2rdl"
+                src="https://yandex.ru/map-widget/v1/?ll=30.426&z=16&l=map&text=Ржевская+ул.+2Б+Санкт-Петербург"
                 width="100%"
                 height="100%"
                 frameBorder="0"
-                title="Карта — Шиномонтаж У Рустама"
+                title="Автосервис У Рустама — Ржевская 2Б"
+                style={{ border: "none", filter: "invert(0.9) hue-rotate(180deg) saturate(0.8)" }}
+                allowFullScreen
+              />
+            </div>
+          </div>
+
+          {/* Точка 2 — Шиномонтаж */}
+          <div id="point-2" data-animate className={`transition-all duration-700 ${visibleItems.has("point-2") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 rounded-full bg-fire flex items-center justify-center font-oswald font-bold text-white text-sm">2</div>
+              <div>
+                <h3 className="font-oswald text-2xl font-bold">ШИНОМОНТАЖ <span className="text-gradient">У РУСТАМА</span></h3>
+                <p className="text-gray-400 text-sm">Поперечная ул., 15б, посёлок Ковалёво</p>
+              </div>
+              <a
+                href="https://yandex.ru/maps/?text=Поперечная+ул.+15б+посёлок+Ковалёво+Санкт-Петербург&rtt=auto"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-auto bg-fire px-5 py-2.5 rounded-xl text-white font-semibold text-sm hover-glow transition-all duration-300 hover:scale-105 flex items-center gap-2"
+              >
+                <Icon name="Navigation" size={16} />
+                Маршрут
+              </a>
+            </div>
+            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(249,115,22,0.25)", height: "320px" }}>
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=30.5&z=13&l=map&text=Поперечная+ул.+15б+Ковалёво+Санкт-Петербург"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                title="Шиномонтаж У Рустама — Поперечная 15б Ковалёво"
                 style={{ border: "none", filter: "invert(0.9) hue-rotate(180deg) saturate(0.8)" }}
                 allowFullScreen
               />
@@ -526,13 +567,13 @@ export default function Index() {
           <h2 className="font-oswald text-4xl sm:text-5xl font-bold text-white mb-4">ЗАПИШИТЕСЬ ПРЯМО СЕЙЧАС</h2>
           <p className="text-orange-100 text-lg mb-8 max-w-xl mx-auto">Позвоните или напишите — ответим мгновенно и подберём удобное время</p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="tel:+79001234567"
+            <a href="tel:+79605333089"
               className="bg-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
               style={{ color: "#f97316" }}>
               <Icon name="Phone" size={20} />
               Позвонить
             </a>
-            <a href="https://wa.me/79001234567"
+            <a href="https://wa.me/79605333089"
               className="px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 text-white"
               style={{ border: "2px solid rgba(255,255,255,0.6)", background: "transparent" }}>
               <Icon name="MessageCircle" size={20} />
