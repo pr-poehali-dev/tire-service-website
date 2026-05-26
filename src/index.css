@@ -25,11 +25,11 @@
     --ring: 20 96% 50%;
     --radius: 0.75rem;
 
-    --dark: #0f0f0f;
-    --dark-2: #1a1a1a;
-    --dark-3: #242424;
-    --orange: #f97316;
-    --orange-light: #fb923c;
+    --dark: #0a0a0a;
+    --dark-2: #141414;
+    --dark-3: #1e1e1e;
+    --orange: #dc2626;
+    --orange-light: #ef4444;
     --red: #dc2626;
   }
 }
@@ -54,35 +54,35 @@
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, #f97316, #dc2626);
+    background: linear-gradient(135deg, #ef4444, #991b1b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .bg-fire {
-    background: linear-gradient(135deg, #f97316, #dc2626);
+    background: linear-gradient(135deg, #dc2626, #991b1b);
   }
 
   .bg-dark-card {
     background: var(--dark-2);
-    border: 1px solid rgba(249, 115, 22, 0.15);
+    border: 1px solid rgba(220, 38, 38, 0.2);
   }
 
   .hover-glow:hover {
-    box-shadow: 0 0 30px rgba(249, 115, 22, 0.4);
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
   }
 
   .section-pattern {
     background-image:
       radial-gradient(
         circle at 20% 50%,
-        rgba(249, 115, 22, 0.06) 0%,
+        rgba(220, 38, 38, 0.07) 0%,
         transparent 50%
       ),
       radial-gradient(
         circle at 80% 20%,
-        rgba(220, 38, 38, 0.06) 0%,
+        rgba(153, 27, 27, 0.07) 0%,
         transparent 50%
       );
   }
@@ -112,6 +112,6 @@
   background: #0f0f0f;
 }
 ::-webkit-scrollbar-thumb {
-  background: #f97316;
+  background: #dc2626;
   border-radius: 3px;
 }

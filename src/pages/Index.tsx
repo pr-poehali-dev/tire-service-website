@@ -10,7 +10,7 @@ const services = [
   { icon: "Shield", title: "Ремонт проколов", desc: "Устраняем любые повреждения", price: "от 300 ₽" },
   { icon: "RefreshCw", title: "Хранение шин", desc: "Безопасное хранение до сезона", price: "от 200 ₽/мес" },
   { icon: "Gauge", title: "Подкачка азотом", desc: "Стабильное давление в колёсах", price: "от 150 ₽" },
-  { icon: "Car", title: "Компьютерный развал", desc: "Регулировка углов установки", price: "от 1500 ₽" },
+
 ];
 
 const prices = [
@@ -43,8 +43,8 @@ const portfolio = [
 ];
 
 const stats = [
-  { val: "8 лет", label: "на рынке" },
-  { val: "15 000+", label: "довольных клиентов" },
+  { val: "5 лет", label: "на рынке" },
+  { val: "2 000+", label: "довольных клиентов" },
   { val: "30 мин", label: "среднее время работ" },
   { val: "100%", label: "гарантия качества" },
 ];
@@ -58,7 +58,7 @@ const promos = [
     price: "1 500 ₽",
     saving: "Экономия 500 ₽",
     until: "до 30 июня",
-    color: "#f97316",
+    color: "#dc2626",
   },
   {
     badge: "⚡ Быстро",
@@ -98,7 +98,7 @@ const promos = [
     price: "2 200 ₽",
     saving: "Экономия 700 ₽",
     until: "до 15 июля",
-    color: "#f97316",
+    color: "#dc2626",
   },
   {
     badge: "💼 Корп.",
@@ -151,7 +151,7 @@ export default function Index() {
   return (
     <div className="min-h-screen" style={{ background: "var(--dark)", color: "#fff", fontFamily: "'Golos Text', sans-serif" }}>
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: "rgba(15,15,15,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(249,115,22,0.2)" }}>
+      <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: "rgba(15,15,15,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(220,38,38,0.2)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
           <button onClick={() => scrollTo("home")} className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-fire flex items-center justify-center">
@@ -167,8 +167,8 @@ export default function Index() {
               <button
                 key={link.id}
                 onClick={() => scrollTo(link.id)}
-                className="text-sm font-medium transition-all duration-200 hover:text-orange-400"
-                style={{ color: activeSection === link.id ? "#f97316" : "#aaa", fontFamily: "'Golos Text', sans-serif" }}
+                className="text-sm font-medium transition-all duration-200 hover:text-red-400"
+                style={{ color: activeSection === link.id ? "#dc2626" : "#aaa", fontFamily: "'Golos Text', sans-serif" }}
               >
                 {link.label}
               </button>
@@ -179,7 +179,7 @@ export default function Index() {
           </div>
 
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <Icon name={isMenuOpen ? "X" : "Menu"} size={24} className="text-orange-400" />
+            <Icon name={isMenuOpen ? "X" : "Menu"} size={24} className="text-red-400" />
           </button>
         </div>
 
@@ -189,7 +189,7 @@ export default function Index() {
               <button
                 key={link.id}
                 onClick={() => scrollTo(link.id)}
-                className="text-left py-2 text-sm font-medium border-b border-gray-800 hover:text-orange-400 transition-colors"
+                className="text-left py-2 text-sm font-medium border-b border-gray-800 hover:text-red-400 transition-colors"
                 style={{ color: "#ccc" }}
               >
                 {link.label}
@@ -206,20 +206,20 @@ export default function Index() {
       <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-16">
         <div className="absolute inset-0">
           <img src={HERO_IMAGE} alt="Шиномонтаж" className="w-full h-full object-cover" style={{ filter: "brightness(0.25)" }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(15,15,15,0.9) 0%, rgba(249,115,22,0.1) 50%, rgba(15,15,15,0.95) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(15,15,15,0.9) 0%, rgba(220,38,38,0.1) 50%, rgba(15,15,15,0.95) 100%)" }} />
         </div>
 
         <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] opacity-10 pointer-events-none">
-          <div className="w-full h-full rounded-full border-4 border-orange-500 animate-spin-slow" style={{ borderStyle: "dashed" }} />
-          <div className="absolute inset-8 rounded-full border-2 border-orange-400" />
+          <div className="w-full h-full rounded-full border-4 border-red-500 animate-spin-slow" style={{ borderStyle: "dashed" }} />
+          <div className="absolute inset-8 rounded-full border-2 border-red-400" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
-              style={{ background: "rgba(249,115,22,0.15)", border: "1px solid rgba(249,115,22,0.4)", color: "#fb923c" }}>
-              <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
-              Открыто сейчас · Пн–Вс 8:00–22:00
+              style={{ background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.4)", color: "#ef4444" }}>
+              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              Открыто сейчас · Пн–Вс 9:00–22:00
             </div>
 
             <h1 className="font-oswald text-5xl sm:text-6xl md:text-7xl font-bold leading-none mb-6 animate-fade-in"
@@ -230,7 +230,7 @@ export default function Index() {
 
             <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-xl leading-relaxed animate-fade-in animate-delay-200"
               style={{ animationFillMode: "forwards" }}>
-              Профессиональный шиномонтаж в Москве. Замена, балансировка, ремонт — быстро, качественно, с гарантией.
+              Профессиональный шиномонтаж и автосервис в Санкт-Петербурге. Замена, балансировка, ремонт — быстро, качественно, с гарантией.
             </p>
 
             <div className="flex flex-wrap gap-4 animate-fade-in animate-delay-300" style={{ animationFillMode: "forwards" }}>
@@ -241,7 +241,7 @@ export default function Index() {
               </a>
               <button onClick={() => scrollTo("services")}
                 className="px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
-                style={{ border: "2px solid rgba(249,115,22,0.5)", color: "#f97316", background: "transparent" }}>
+                style={{ border: "2px solid rgba(220,38,38,0.5)", color: "#dc2626", background: "transparent" }}>
                 Наши услуги
                 <Icon name="ArrowRight" size={20} />
               </button>
@@ -249,12 +249,12 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0" style={{ background: "rgba(249,115,22,0.95)" }}>
+        <div className="absolute bottom-0 left-0 right-0" style={{ background: "rgba(220,38,38,0.95)" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-4">
             {stats.map((s) => (
               <div key={s.val} className="text-center">
                 <div className="font-oswald text-2xl font-bold text-white">{s.val}</div>
-                <div className="text-orange-100 text-xs">{s.label}</div>
+                <div className="text-red-100 text-xs">{s.label}</div>
               </div>
             ))}
           </div>
@@ -265,7 +265,7 @@ export default function Index() {
       <section id="services" className="py-24 section-pattern" style={{ background: "var(--dark)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div id="services-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("services-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Что мы делаем</div>
+            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Что мы делаем</div>
             <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">НАШИ <span className="text-gradient">УСЛУГИ</span></h2>
             <p className="text-gray-400 text-lg max-w-xl mx-auto">Полный спектр услуг для ваших колёс — от замены до хранения</p>
           </div>
@@ -284,7 +284,7 @@ export default function Index() {
                 </div>
                 <h3 className="font-oswald text-xl font-bold mb-2">{s.title}</h3>
                 <p className="text-gray-400 text-sm mb-4 leading-relaxed">{s.desc}</p>
-                <div className="font-bold text-orange-400 text-lg">{s.price}</div>
+                <div className="font-bold text-red-400 text-lg">{s.price}</div>
               </div>
             ))}
           </div>
@@ -295,16 +295,16 @@ export default function Index() {
       <section id="prices" className="py-24" style={{ background: "var(--dark-2)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div id="prices-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("prices-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Прозрачные цены</div>
+            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Прозрачные цены</div>
             <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ПРАЙС-<span className="text-gradient">ЛИСТ</span></h2>
             <p className="text-gray-400 text-lg">Честные цены без скрытых доплат</p>
           </div>
 
           <div id="prices-table" data-animate className={`rounded-2xl overflow-hidden transition-all duration-700 ${visibleItems.has("prices-table") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-            style={{ border: "1px solid rgba(249,115,22,0.2)" }}>
+            style={{ border: "1px solid rgba(220,38,38,0.2)" }}>
             {prices.map((p, i) => (
               <div key={p.name}
-                className="flex items-center justify-between px-6 py-4 hover:bg-orange-500/5 transition-colors duration-200"
+                className="flex items-center justify-between px-6 py-4 hover:bg-red-500/5 transition-colors duration-200"
                 style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.01)", borderBottom: i < prices.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-fire" />
@@ -312,7 +312,7 @@ export default function Index() {
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-gray-500 text-sm">{p.per}</span>
-                  <span className="font-oswald text-xl font-bold text-orange-400 min-w-[100px] text-right">{p.price}</span>
+                  <span className="font-oswald text-xl font-bold text-red-400 min-w-[100px] text-right">{p.price}</span>
                 </div>
               </div>
             ))}
@@ -332,7 +332,7 @@ export default function Index() {
       <section id="promos" className="py-24" style={{ background: "var(--dark)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div id="promos-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("promos-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Выгодные предложения</div>
+            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Выгодные предложения</div>
             <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">АК<span className="text-gradient">ЦИИ</span></h2>
             <p className="text-gray-400 text-lg">Специальные цены и комплексные предложения</p>
           </div>
@@ -393,7 +393,7 @@ export default function Index() {
       <section id="portfolio" className="py-24" style={{ background: "var(--dark-2)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div id="portfolio-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("portfolio-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Наши работы</div>
+            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Наши работы</div>
             <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ПОРТ<span className="text-gradient">ФОЛИО</span></h2>
             <p className="text-gray-400 text-lg">Примеры выполненных работ за последний месяц</p>
           </div>
@@ -405,7 +405,7 @@ export default function Index() {
                 id={`port-${i}`}
                 data-animate
                 className={`group rounded-2xl overflow-hidden transition-all duration-500 hover:scale-105 ${visibleItems.has(`port-${i}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ border: "1px solid rgba(249,115,22,0.15)", transitionDelay: `${i * 80}ms` }}
+                style={{ border: "1px solid rgba(220,38,38,0.15)", transitionDelay: `${i * 80}ms` }}
               >
                 <div className="relative overflow-hidden h-48">
                   <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -425,7 +425,7 @@ export default function Index() {
       <section id="reviews" className="py-24" style={{ background: "var(--dark-2)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div id="reviews-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("reviews-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Клиенты говорят</div>
+            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Клиенты говорят</div>
             <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ОТ<span className="text-gradient">ЗЫВЫ</span></h2>
             <p className="text-gray-400 text-lg">Реальные отзывы наших клиентов</p>
           </div>
@@ -441,7 +441,7 @@ export default function Index() {
               >
                 <div className="flex gap-1 mb-4">
                   {Array(r.stars).fill(0).map((_, j) => (
-                    <Icon key={j} name="Star" size={16} className="text-orange-400 fill-orange-400" />
+                    <Icon key={j} name="Star" size={16} className="text-red-400 fill-red-400" />
                   ))}
                 </div>
                 <p className="text-gray-300 text-sm leading-relaxed mb-4">«{r.text}»</p>
@@ -464,7 +464,7 @@ export default function Index() {
       <section id="contacts" className="py-24" style={{ background: "var(--dark)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div id="contacts-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("contacts-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Приезжайте к нам</div>
+            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Приезжайте к нам</div>
             <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">КОН<span className="text-gradient">ТАКТЫ</span></h2>
             <p className="text-gray-400 text-lg">Две точки в Санкт-Петербурге</p>
           </div>
@@ -472,8 +472,8 @@ export default function Index() {
           {/* Общие контакты */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
             {[
-              { icon: "Phone", title: "Телефон", val: "+7 960 533 30 89", val2: "Принимаем звонки 8:00–22:00", href: "tel:+79605333089" },
-              { icon: "Clock", title: "Режим работы", val: "Пн–Вс: 8:00 – 22:00", val2: "Без выходных и праздников", href: null },
+              { icon: "Phone", title: "Телефон", val: "+7 960 533 30 89", val2: "Принимаем звонки 9:00–22:00", href: "tel:+79605333089" },
+              { icon: "Clock", title: "Режим работы", val: "Пн–Вс: 9:00 – 22:00", val2: "Без выходных и праздников", href: null },
               { icon: "MessageCircle", title: "WhatsApp / Telegram", val: "+7 960 533 30 89", val2: "Ответим в течение 5 минут", href: "https://wa.me/79605333089" },
             ].map((item) => (
               <div key={item.title} className="bg-dark-card rounded-2xl p-5 flex items-start gap-4">
@@ -483,7 +483,7 @@ export default function Index() {
                 <div>
                   <div className="text-gray-400 text-xs uppercase tracking-wider mb-1">{item.title}</div>
                   {item.href ? (
-                    <a href={item.href} className="font-semibold text-white hover:text-orange-400 transition-colors">{item.val}</a>
+                    <a href={item.href} className="font-semibold text-white hover:text-red-400 transition-colors">{item.val}</a>
                   ) : (
                     <div className="font-semibold text-white">{item.val}</div>
                   )}
@@ -511,7 +511,7 @@ export default function Index() {
                 Маршрут
               </a>
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(249,115,22,0.25)", height: "320px" }}>
+            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(220,38,38,0.25)", height: "320px" }}>
               <iframe
                 src="https://yandex.ru/map-widget/v1/?ll=30.426&z=16&l=map&text=Ржевская+ул.+2Б+Санкт-Петербург"
                 width="100%"
@@ -542,7 +542,7 @@ export default function Index() {
                 Маршрут
               </a>
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(249,115,22,0.25)", height: "320px" }}>
+            <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid rgba(220,38,38,0.25)", height: "320px" }}>
               <iframe
                 src="https://yandex.ru/map-widget/v1/?ll=30.5&z=13&l=map&text=Поперечная+ул.+15б+Ковалёво+Санкт-Петербург"
                 width="100%"
@@ -565,11 +565,11 @@ export default function Index() {
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="font-oswald text-4xl sm:text-5xl font-bold text-white mb-4">ЗАПИШИТЕСЬ ПРЯМО СЕЙЧАС</h2>
-          <p className="text-orange-100 text-lg mb-8 max-w-xl mx-auto">Позвоните или напишите — ответим мгновенно и подберём удобное время</p>
+          <p className="text-red-100 text-lg mb-8 max-w-xl mx-auto">Позвоните или напишите — ответим мгновенно и подберём удобное время</p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="tel:+79605333089"
               className="bg-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
-              style={{ color: "#f97316" }}>
+              style={{ color: "#dc2626" }}>
               <Icon name="Phone" size={20} />
               Позвонить
             </a>
@@ -584,7 +584,7 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-8" style={{ background: "#0a0a0a", borderTop: "1px solid rgba(249,115,22,0.15)" }}>
+      <footer className="py-8" style={{ background: "#0a0a0a", borderTop: "1px solid rgba(220,38,38,0.15)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-full bg-fire flex items-center justify-center">

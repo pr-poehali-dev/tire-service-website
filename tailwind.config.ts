@@ -58,12 +58,12 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				fire: {
-					50: '#fff7ed',
-					100: '#ffedd5',
-					400: '#fb923c',
-					500: '#f97316',
-					600: '#ea580c',
-					700: '#c2410c',
+					50: '#fef2f2',
+					100: '#fee2e2',
+					400: '#f87171',
+					500: '#dc2626',
+					600: '#b91c1c',
+					700: '#991b1b',
 				},
 			},
 			borderRadius: {
