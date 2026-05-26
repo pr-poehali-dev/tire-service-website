@@ -1,280 +1,294 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
-const IMG_TREAD = "https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/files/1be376f3-c97d-4e46-94a6-5d208417e0af.jpg";
-const IMG_RIM = "https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/files/a735efb8-d006-42c9-88dc-f312b66522be.jpg";
-const IMG_GARAGE = "https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/files/6899abdc-1585-434d-8497-d3453a4a1c85.jpg";
+const HERO_IMAGE = "https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/files/6899abdc-1585-434d-8497-d3453a4a1c85.jpg";
+const TIRE_IMAGE = "https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/files/937a2fda-c6e8-43d1-89e4-e49b84022139.jpg";
 
-const SERVICES = [
-  { num: "01", title: "Замена шин", price: "800₽", tag: "4 колеса" },
-  { num: "02", title: "Балансировка", price: "400₽", tag: "1 колесо" },
-  { num: "03", title: "Ремонт прокола", price: "300₽", tag: "срочно" },
-  { num: "04", title: "Развал-схождение", price: "1500₽", tag: "2 оси" },
-  { num: "05", title: "Хранение шин", price: "2400₽", tag: "сезон" },
-  { num: "06", title: "Подкачка азотом", price: "150₽", tag: "1 колесо" },
+const services = [
+  { icon: "Wrench", title: "Замена шин", desc: "Сезонная смена резины за 30 минут", price: "от 800 ₽" },
+  { icon: "Settings", title: "Балансировка", desc: "Точная балансировка всех колёс", price: "от 400 ₽" },
+  { icon: "Shield", title: "Ремонт проколов", desc: "Устраняем любые повреждения", price: "от 300 ₽" },
+  { icon: "RefreshCw", title: "Хранение шин", desc: "Безопасное хранение до сезона", price: "от 200 ₽/мес" },
+  { icon: "Gauge", title: "Подкачка азотом", desc: "Стабильное давление в колёсах", price: "от 150 ₽" },
+  { icon: "Car", title: "Компьютерный развал", desc: "Регулировка углов установки", price: "от 1500 ₽" },
 ];
 
-const REVIEWS = [
-  { name: "Алексей П.", car: "Toyota Camry", text: "25 минут — и готово. Профессионалы.", stars: 5 },
-  { name: "Марина С.", car: "Kia Sportage", text: "Третий год только сюда. Цены честные.", stars: 5 },
-  { name: "Дмитрий В.", car: "BMW 3", text: "Гвоздь в центре — исправили за 15 минут.", stars: 5 },
-  { name: "Ольга К.", car: "VW Polo", text: "Хранение шин — всегда идеальное состояние.", stars: 5 },
+const prices = [
+  { name: "Замена R13–R15", price: "800 ₽", per: "4 колеса" },
+  { name: "Замена R16–R18", price: "1 200 ₽", per: "4 колеса" },
+  { name: "Замена R19–R21", price: "1 600 ₽", per: "4 колеса" },
+  { name: "Балансировка", price: "400 ₽", per: "1 колесо" },
+  { name: "Ремонт прокола", price: "300 ₽", per: "1 колесо" },
+  { name: "Развал-схождение", price: "1 500 ₽", per: "2 оси" },
+  { name: "Хранение шин", price: "2 400 ₽", per: "сезон" },
+  { name: "Подкачка азотом", price: "150 ₽", per: "1 колесо" },
+];
+
+const reviews = [
+  { name: "Алексей П.", stars: 5, text: "Приехал без записи, обслужили за 25 минут. Ребята профессионалы, всё чисто и аккуратно!", car: "Toyota Camry" },
+  { name: "Марина С.", stars: 5, text: "Третий год езжу только сюда на сезонную смену. Цены честные, качество отличное. Рекомендую всем!", car: "Kia Sportage" },
+  { name: "Дмитрий В.", stars: 5, text: "Поймал гвоздь в центре города, заехал к Рустаму — за 15 минут починили и отпустили. Спасибо огромное!", car: "BMW 3 Series" },
+  { name: "Ольга К.", stars: 5, text: "Хранение шин — отличный сервис. Всегда в идеальном состоянии возвращают. Персонал очень вежливый.", car: "Volkswagen Polo" },
+  { name: "Игорь М.", stars: 5, text: "Развал-схождение сделали идеально, машина стала держать дорогу гораздо лучше. Отличная работа!", car: "Lada Vesta" },
+  { name: "Наталья Р.", stars: 5, text: "Обратилась первый раз — осталась в полном восторге! Быстро, дёшево и главное качественно.", car: "Hyundai Creta" },
+];
+
+const portfolio = [
+  { title: "Замена летней резины", desc: "BMW X5, R20", img: TIRE_IMAGE },
+  { title: "Балансировка дисков", desc: "Mercedes GLE, R21", img: HERO_IMAGE },
+  { title: "Ремонт прокола", desc: "Toyota RAV4, R17", img: TIRE_IMAGE },
+  { title: "Развал-схождение", desc: "Volkswagen Tiguan, R18", img: HERO_IMAGE },
+  { title: "Хранение комплекта", desc: "Kia Sportage, R18", img: TIRE_IMAGE },
+  { title: "Подкачка азотом", desc: "Lada Vesta Sport, R16", img: HERO_IMAGE },
+];
+
+const stats = [
+  { val: "8 лет", label: "на рынке" },
+  { val: "15 000+", label: "довольных клиентов" },
+  { val: "30 мин", label: "среднее время работ" },
+  { val: "100%", label: "гарантия качества" },
 ];
 
 export default function Index() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [revealed, setRevealed] = useState<Set<string>>(new Set());
-  const tickerRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState("home");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) setRevealed((p) => new Set([...p, e.target.id])); }),
-      { threshold: 0.08 }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleItems((prev) => new Set([...prev, entry.target.id]));
+          }
+        });
+      },
+      { threshold: 0.1 }
     );
-    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    document.querySelectorAll("[data-animate]").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
 
-  const vis = (id: string) => revealed.has(id);
-
-  const go = (id: string) => {
+  const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMenuOpen(false);
+    setIsMenuOpen(false);
+    setActiveSection(id);
   };
 
+  const navLinks = [
+    { id: "home", label: "Главная" },
+    { id: "services", label: "Услуги" },
+    { id: "prices", label: "Прайс" },
+    { id: "portfolio", label: "Портфолио" },
+    { id: "reviews", label: "Отзывы" },
+    { id: "contacts", label: "Контакты" },
+  ];
+
   return (
-    <div style={{ background: "#F5F0E8", color: "#0A0A0A", fontFamily: "'Oswald', sans-serif", overflowX: "hidden" }}>
-
-      {/* ── TICKER ── */}
-      <div style={{ background: "#0A0A0A", overflow: "hidden", borderBottom: "2px solid #E8C84A" }}>
-        <div ref={tickerRef} style={{ display: "flex", gap: 0, animation: "ticker 18s linear infinite", whiteSpace: "nowrap", padding: "8px 0" }}>
-          {Array(4).fill(null).map((_, i) => (
-            <span key={i} style={{ color: "#E8C84A", fontFamily: "'Oswald', sans-serif", fontSize: 13, fontWeight: 600, letterSpacing: "0.15em", paddingRight: 60 }}>
-              ШИНОМОНТАЖ У РУСТАМА &nbsp;✦&nbsp; РАБОТАЕМ 8:00–22:00 &nbsp;✦&nbsp; БЕЗ ВЫХОДНЫХ &nbsp;✦&nbsp; МОСКВА &nbsp;✦&nbsp;
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ── NAV ── */}
-      <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        background: scrollY > 60 ? "rgba(245,240,232,0.97)" : "transparent",
-        backdropFilter: scrollY > 60 ? "blur(8px)" : "none",
-        borderBottom: scrollY > 60 ? "2px solid #0A0A0A" : "none",
-        transition: "all 0.3s",
-        padding: "0 24px",
-      }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-          <button onClick={() => go("hero")} style={{ display: "flex", alignItems: "center", gap: 10, background: "none", border: "none", cursor: "pointer" }}>
-            <div style={{ width: 36, height: 36, background: "#E8C84A", border: "2px solid #0A0A0A", display: "flex", alignItems: "center", justifyContent: "center", transform: "rotate(-12deg)" }}>
-              <Icon name="Settings" size={18} />
+    <div className="min-h-screen" style={{ background: "var(--dark)", color: "#fff", fontFamily: "'Golos Text', sans-serif" }}>
+      {/* NAV */}
+      <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: "rgba(15,15,15,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(249,115,22,0.2)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+          <button onClick={() => scrollTo("home")} className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-fire flex items-center justify-center">
+              <Icon name="Settings" size={16} className="text-white animate-spin-slow" />
             </div>
-            <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: 20, fontWeight: 700, letterSpacing: "0.05em" }}>У РУСТАМА</span>
+            <span className="font-oswald text-xl font-bold tracking-wide">
+              У <span className="text-gradient">РУСТАМА</span>
+            </span>
           </button>
 
-          <div className="hidden md:flex" style={{ gap: 32, alignItems: "center" }}>
-            {[["hero","Главная"],["services","Услуги"],["portfolio","Работы"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
-              <button key={id} onClick={() => go(id)}
-                style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "'Golos Text', sans-serif", fontSize: 14, fontWeight: 600, letterSpacing: "0.08em", color: "#0A0A0A" }}>
-                {label}
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollTo(link.id)}
+                className="text-sm font-medium transition-all duration-200 hover:text-orange-400"
+                style={{ color: activeSection === link.id ? "#f97316" : "#aaa", fontFamily: "'Golos Text', sans-serif" }}
+              >
+                {link.label}
               </button>
             ))}
-            <a href="tel:+79001234567" style={{ background: "#E8C84A", border: "2px solid #0A0A0A", padding: "8px 20px", fontWeight: 700, fontSize: 14, letterSpacing: "0.05em", textDecoration: "none", color: "#0A0A0A", fontFamily: "'Oswald', sans-serif", transition: "transform 0.15s" }}
-              onMouseEnter={e => (e.currentTarget.style.transform = "translate(-2px,-2px)")}
-              onMouseLeave={e => (e.currentTarget.style.transform = "none")}>
-              ЗАПИСАТЬСЯ
+            <a href="tel:+79001234567" className="bg-fire px-4 py-2 rounded-lg text-white font-semibold text-sm hover-glow transition-all duration-300 hover:scale-105">
+              Записаться
             </a>
           </div>
 
-          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)} style={{ background: "none", border: "none", cursor: "pointer" }}>
-            <Icon name={menuOpen ? "X" : "Menu"} size={26} />
+          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <Icon name={isMenuOpen ? "X" : "Menu"} size={24} className="text-orange-400" />
           </button>
         </div>
 
-        {menuOpen && (
-          <div style={{ background: "#F5F0E8", borderTop: "2px solid #0A0A0A", padding: "16px 24px", display: "flex", flexDirection: "column", gap: 12 }}>
-            {[["hero","Главная"],["services","Услуги"],["portfolio","Работы"],["reviews","Отзывы"],["contacts","Контакты"]].map(([id, label]) => (
-              <button key={id} onClick={() => go(id)}
-                style={{ background: "none", border: "none", cursor: "pointer", textAlign: "left", fontFamily: "'Oswald', sans-serif", fontSize: 22, fontWeight: 700, letterSpacing: "0.05em", color: "#0A0A0A", borderBottom: "1px solid #ccc", paddingBottom: 8 }}>
-                {label}
+        {isMenuOpen && (
+          <div className="md:hidden px-4 pb-4 flex flex-col gap-2" style={{ background: "rgba(15,15,15,0.98)" }}>
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => scrollTo(link.id)}
+                className="text-left py-2 text-sm font-medium border-b border-gray-800 hover:text-orange-400 transition-colors"
+                style={{ color: "#ccc" }}
+              >
+                {link.label}
               </button>
             ))}
+            <a href="tel:+79001234567" className="mt-2 bg-fire px-4 py-3 rounded-lg text-white font-semibold text-center text-sm">
+              Записаться
+            </a>
           </div>
         )}
       </nav>
 
-      {/* ── HERO ── */}
-      <section id="hero" style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "1fr 1fr", paddingTop: 90, background: "#F5F0E8", position: "relative", overflow: "hidden" }}>
-        {/* LEFT */}
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "60px 48px 60px 32px", position: "relative", zIndex: 2 }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#0A0A0A", color: "#E8C84A", padding: "4px 12px", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", marginBottom: 32, alignSelf: "flex-start" }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", animation: "pulse 2s infinite" }} />
-            ОТКРЫТО · ПН–ВС 8:00–22:00
-          </div>
+      {/* HERO */}
+      <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-16">
+        <div className="absolute inset-0">
+          <img src={HERO_IMAGE} alt="Шиномонтаж" className="w-full h-full object-cover" style={{ filter: "brightness(0.25)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(15,15,15,0.9) 0%, rgba(249,115,22,0.1) 50%, rgba(15,15,15,0.95) 100%)" }} />
+        </div>
 
-          <h1 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(64px, 8vw, 110px)", fontWeight: 700, lineHeight: 0.9, letterSpacing: "-0.02em", marginBottom: 32, color: "#0A0A0A" }}>
-            ШИ<br />
-            НО<br />
-            МОН<br />
-            <span style={{ color: "#E8C84A", WebkitTextStroke: "2px #0A0A0A" }}>ТАЖ</span>
-          </h1>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] opacity-10 pointer-events-none">
+          <div className="w-full h-full rounded-full border-4 border-orange-500 animate-spin-slow" style={{ borderStyle: "dashed" }} />
+          <div className="absolute inset-8 rounded-full border-2 border-orange-400" />
+        </div>
 
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginBottom: 40 }}>
-            <div style={{ width: 3, background: "#E8C84A", alignSelf: "stretch", flexShrink: 0, minHeight: 40 }} />
-            <p style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 17, lineHeight: 1.6, color: "#444", maxWidth: 340 }}>
-              Профессиональный шиномонтаж в Москве. 8 лет опыта, 15 000+ клиентов, гарантия качества.
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
+              style={{ background: "rgba(249,115,22,0.15)", border: "1px solid rgba(249,115,22,0.4)", color: "#fb923c" }}>
+              <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
+              Открыто сейчас · Пн–Вс 8:00–22:00
+            </div>
+
+            <h1 className="font-oswald text-5xl sm:text-6xl md:text-7xl font-bold leading-none mb-6 animate-fade-in"
+              style={{ animationFillMode: "forwards" }}>
+              ШИНОМОНТАЖ<br />
+              <span className="text-gradient">«У РУСТАМА»</span>
+            </h1>
+
+            <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-xl leading-relaxed animate-fade-in animate-delay-200"
+              style={{ animationFillMode: "forwards" }}>
+              Профессиональный шиномонтаж в Москве. Замена, балансировка, ремонт — быстро, качественно, с гарантией.
             </p>
-          </div>
 
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a href="tel:+79001234567" style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "#0A0A0A", color: "#E8C84A", padding: "14px 28px",
-              fontFamily: "'Oswald', sans-serif", fontSize: 16, fontWeight: 700, letterSpacing: "0.08em",
-              textDecoration: "none", border: "2px solid #0A0A0A",
-              boxShadow: "4px 4px 0 #E8C84A", transition: "all 0.15s",
-            }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translate(-3px,-3px)"; e.currentTarget.style.boxShadow = "7px 7px 0 #E8C84A"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "4px 4px 0 #E8C84A"; }}>
-              <Icon name="Phone" size={18} />
-              +7 (900) 123-45-67
-            </a>
-            <button onClick={() => go("services")} style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              background: "transparent", color: "#0A0A0A", padding: "14px 28px",
-              fontFamily: "'Oswald', sans-serif", fontSize: 16, fontWeight: 700, letterSpacing: "0.08em",
-              border: "2px solid #0A0A0A", cursor: "pointer",
-              boxShadow: "4px 4px 0 #0A0A0A", transition: "all 0.15s",
-            }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translate(-3px,-3px)"; e.currentTarget.style.boxShadow = "7px 7px 0 #0A0A0A"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "4px 4px 0 #0A0A0A"; }}>
-              Услуги и цены
-              <Icon name="ArrowRight" size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* RIGHT */}
-        <div style={{ position: "relative", overflow: "hidden" }}>
-          <img src={IMG_RIM} alt="диск" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(20%) contrast(1.1)" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, #F5F0E8 0%, transparent 30%)" }} />
-
-          {/* Big rotated label */}
-          <div style={{
-            position: "absolute", right: -40, top: "50%",
-            transform: "translateY(-50%) rotate(90deg)",
-            fontFamily: "'Oswald', sans-serif", fontSize: 11, fontWeight: 700,
-            letterSpacing: "0.3em", color: "#E8C84A", background: "#0A0A0A",
-            padding: "6px 20px",
-          }}>
-            МОСКВА · АВТОМОБИЛЬНАЯ, 15
-          </div>
-        </div>
-
-        {/* Stats bar bottom */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 5,
-          display: "grid", gridTemplateColumns: "repeat(4,1fr)",
-          background: "#E8C84A", borderTop: "2px solid #0A0A0A",
-        }}>
-          {[["8 ЛЕТ", "опыт"],["15 000+", "клиентов"],["30 МИН", "среднее время"],["100%", "гарантия"]].map(([v, l], i) => (
-            <div key={v} style={{ padding: "14px 0", textAlign: "center", borderRight: i < 3 ? "2px solid #0A0A0A" : "none" }}>
-              <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: 26, fontWeight: 700, lineHeight: 1 }}>{v}</div>
-              <div style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 11, color: "#555", marginTop: 2 }}>{l}</div>
+            <div className="flex flex-wrap gap-4 animate-fade-in animate-delay-300" style={{ animationFillMode: "forwards" }}>
+              <a href="tel:+79001234567"
+                className="bg-fire px-8 py-4 rounded-xl text-white font-bold text-lg hover-glow transition-all duration-300 hover:scale-105 flex items-center gap-2">
+                <Icon name="Phone" size={20} />
+                +7 (900) 123-45-67
+              </a>
+              <button onClick={() => scrollTo("services")}
+                className="px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
+                style={{ border: "2px solid rgba(249,115,22,0.5)", color: "#f97316", background: "transparent" }}>
+                Наши услуги
+                <Icon name="ArrowRight" size={20} />
+              </button>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── SERVICES ── */}
-      <section id="services" style={{ background: "#0A0A0A", padding: "100px 24px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div id="svc-head" data-reveal style={{
-            display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 60,
-            opacity: vis("svc-head") ? 1 : 0, transform: vis("svc-head") ? "none" : "translateY(30px)", transition: "all 0.7s",
-          }}>
-            <div>
-              <div style={{ color: "#E8C84A", fontSize: 11, fontWeight: 700, letterSpacing: "0.25em", marginBottom: 12 }}>ЧТО МЫ ДЕЛАЕМ</div>
-              <h2 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(48px,6vw,80px)", fontWeight: 700, color: "#F5F0E8", lineHeight: 0.95, letterSpacing: "-0.02em" }}>
-                УСЛУГИ<br /><span style={{ color: "#E8C84A" }}>&amp; ЦЕНЫ</span>
-              </h2>
-            </div>
-            <a href="tel:+79001234567" style={{
-              display: "none", background: "#E8C84A", border: "2px solid #E8C84A", padding: "12px 24px",
-              fontFamily: "'Oswald', sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: "0.1em", textDecoration: "none", color: "#0A0A0A",
-            }} className="hidden md:inline-flex">ЗАПИСАТЬСЯ →</a>
           </div>
+        </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-            {SERVICES.map((s, i) => (
-              <div key={s.num} id={`sv-${i}`} data-reveal
-                style={{
-                  display: "grid", gridTemplateColumns: "80px 1fr auto auto",
-                  alignItems: "center", gap: 24,
-                  borderTop: `2px solid ${i === 0 ? "#E8C84A" : "#222"}`,
-                  padding: "24px 0", cursor: "pointer",
-                  opacity: vis(`sv-${i}`) ? 1 : 0,
-                  transform: vis(`sv-${i}`) ? "none" : "translateX(-30px)",
-                  transition: `all 0.6s ${i * 0.07}s`,
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = "#141414"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = "transparent"; }}
-              >
-                <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: 13, color: "#E8C84A", letterSpacing: "0.1em" }}>{s.num}</span>
-                <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(20px,3vw,34px)", fontWeight: 600, color: "#F5F0E8", letterSpacing: "-0.01em" }}>{s.title}</span>
-                <span style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 12, color: "#555", letterSpacing: "0.1em", border: "1px solid #333", padding: "3px 10px" }}>{s.tag}</span>
-                <span style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(22px,2.5vw,36px)", fontWeight: 700, color: "#E8C84A", minWidth: 100, textAlign: "right" }}>{s.price}</span>
+        <div className="absolute bottom-0 left-0 right-0" style={{ background: "rgba(249,115,22,0.95)" }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {stats.map((s) => (
+              <div key={s.val} className="text-center">
+                <div className="font-oswald text-2xl font-bold text-white">{s.val}</div>
+                <div className="text-orange-100 text-xs">{s.label}</div>
               </div>
             ))}
-            <div style={{ borderTop: "2px solid #333" }} />
           </div>
         </div>
       </section>
 
-      {/* ── PORTFOLIO ── */}
-      <section id="portfolio" style={{ background: "#F5F0E8", padding: "100px 24px", position: "relative" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div id="port-head" data-reveal style={{
-            marginBottom: 60,
-            opacity: vis("port-head") ? 1 : 0, transform: vis("port-head") ? "none" : "translateY(30px)", transition: "all 0.7s",
-          }}>
-            <div style={{ color: "#888", fontSize: 11, fontWeight: 700, letterSpacing: "0.25em", marginBottom: 12, fontFamily: "'Golos Text', sans-serif" }}>НАШИ РАБОТЫ</div>
-            <h2 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(48px,6vw,80px)", fontWeight: 700, lineHeight: 0.95, letterSpacing: "-0.02em" }}>
-              ПОРТ<span style={{ WebkitTextStroke: "2px #0A0A0A", color: "transparent" }}>ФОЛИО</span>
-            </h2>
+      {/* SERVICES */}
+      <section id="services" className="py-24 section-pattern" style={{ background: "var(--dark)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div id="services-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("services-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Что мы делаем</div>
+            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">НАШИ <span className="text-gradient">УСЛУГИ</span></h2>
+            <p className="text-gray-400 text-lg max-w-xl mx-auto">Полный спектр услуг для ваших колёс — от замены до хранения</p>
           </div>
 
-          {/* Asymmetric grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gridTemplateRows: "300px 300px", gap: 4 }}>
-            {[
-              { title: "Замена R20", sub: "BMW X5", img: IMG_RIM, span: "1 / 2 / 3 / 2" },
-              { title: "Балансировка R21", sub: "Mercedes GLE", img: IMG_TREAD, span: "1 / 2 / 2 / 3" },
-              { title: "Ремонт прокола", sub: "Toyota RAV4", img: IMG_GARAGE, span: "1 / 3 / 2 / 4" },
-              { title: "Развал-схождение", sub: "VW Tiguan", img: IMG_TREAD, span: "2 / 2 / 3 / 4" },
-            ].map((item, i) => (
-              <div key={i} id={`po-${i}`} data-reveal
-                style={{
-                  gridArea: item.span, position: "relative", overflow: "hidden", cursor: "pointer",
-                  opacity: vis(`po-${i}`) ? 1 : 0, transition: `all 0.7s ${i * 0.1}s`,
-                }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((s, i) => (
+              <div
+                key={s.title}
+                id={`svc-${i}`}
+                data-animate
+                className={`bg-dark-card rounded-2xl p-6 hover-glow transition-all duration-500 hover:scale-105 cursor-pointer group ${visibleItems.has(`svc-${i}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <img src={item.img} alt={item.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(40%)", transition: "all 0.5s" }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.filter = "grayscale(0%) scale(1.05)"; (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.filter = "grayscale(40%)"; (e.currentTarget as HTMLImageElement).style.transform = "none"; }}
-                />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 50%)", pointerEvents: "none" }} />
-                <div style={{ position: "absolute", bottom: 16, left: 16 }}>
-                  <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: 18, fontWeight: 700, color: "#fff" }}>{item.title}</div>
-                  <div style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 12, color: "#E8C84A" }}>{item.sub}</div>
+                <div className="w-14 h-14 rounded-xl bg-fire flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <Icon name={s.icon} size={24} className="text-white" />
+                </div>
+                <h3 className="font-oswald text-xl font-bold mb-2">{s.title}</h3>
+                <p className="text-gray-400 text-sm mb-4 leading-relaxed">{s.desc}</p>
+                <div className="font-bold text-orange-400 text-lg">{s.price}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRICES */}
+      <section id="prices" className="py-24" style={{ background: "var(--dark-2)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div id="prices-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("prices-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Прозрачные цены</div>
+            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ПРАЙС-<span className="text-gradient">ЛИСТ</span></h2>
+            <p className="text-gray-400 text-lg">Честные цены без скрытых доплат</p>
+          </div>
+
+          <div id="prices-table" data-animate className={`rounded-2xl overflow-hidden transition-all duration-700 ${visibleItems.has("prices-table") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            style={{ border: "1px solid rgba(249,115,22,0.2)" }}>
+            {prices.map((p, i) => (
+              <div key={p.name}
+                className="flex items-center justify-between px-6 py-4 hover:bg-orange-500/5 transition-colors duration-200"
+                style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.01)", borderBottom: i < prices.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-fire" />
+                  <span className="font-medium text-white">{p.name}</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-gray-500 text-sm">{p.per}</span>
+                  <span className="font-oswald text-xl font-bold text-orange-400 min-w-[100px] text-right">{p.price}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <a href="tel:+79001234567"
+              className="inline-flex items-center gap-2 bg-fire px-8 py-4 rounded-xl text-white font-bold text-lg hover-glow transition-all duration-300 hover:scale-105">
+              <Icon name="Phone" size={20} />
+              Узнать точную цену
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* PORTFOLIO */}
+      <section id="portfolio" className="py-24" style={{ background: "var(--dark)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div id="portfolio-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("portfolio-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Наши работы</div>
+            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ПОРТ<span className="text-gradient">ФОЛИО</span></h2>
+            <p className="text-gray-400 text-lg">Примеры выполненных работ за последний месяц</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {portfolio.map((item, i) => (
+              <div
+                key={item.title}
+                id={`port-${i}`}
+                data-animate
+                className={`group rounded-2xl overflow-hidden transition-all duration-500 hover:scale-105 ${visibleItems.has(`port-${i}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                style={{ border: "1px solid rgba(249,115,22,0.15)", transitionDelay: `${i * 80}ms` }}
+              >
+                <div className="relative overflow-hidden h-48">
+                  <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)" }} />
+                </div>
+                <div className="p-4" style={{ background: "var(--dark-2)" }}>
+                  <h3 className="font-oswald text-lg font-bold">{item.title}</h3>
+                  <p className="text-gray-400 text-sm mt-1">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -282,46 +296,37 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── REVIEWS ── */}
-      <section id="reviews" style={{ background: "#0A0A0A", padding: "100px 24px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div id="rev-head" data-reveal style={{
-            display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 60,
-            opacity: vis("rev-head") ? 1 : 0, transform: vis("rev-head") ? "none" : "translateY(30px)", transition: "all 0.7s",
-          }}>
-            <h2 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(48px,6vw,80px)", fontWeight: 700, color: "#F5F0E8", lineHeight: 0.95 }}>
-              ОТ<span style={{ color: "#E8C84A" }}>ЗЫВЫ</span>
-            </h2>
-            <div style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 14, color: "#555", maxWidth: 200, textAlign: "right" }}>
-              Реальные отзывы без редактуры
-            </div>
+      {/* REVIEWS */}
+      <section id="reviews" className="py-24" style={{ background: "var(--dark-2)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div id="reviews-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("reviews-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Клиенты говорят</div>
+            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ОТ<span className="text-gradient">ЗЫВЫ</span></h2>
+            <p className="text-gray-400 text-lg">Реальные отзывы наших клиентов</p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 4 }}>
-            {REVIEWS.map((r, i) => (
-              <div key={i} id={`rv-${i}`} data-reveal
-                style={{
-                  background: i % 2 === 0 ? "#111" : "#E8C84A",
-                  padding: "40px 36px",
-                  opacity: vis(`rv-${i}`) ? 1 : 0,
-                  transform: vis(`rv-${i}`) ? "none" : "translateY(20px)",
-                  transition: `all 0.6s ${i * 0.1}s`,
-                }}>
-                <div style={{ display: "flex", gap: 4, marginBottom: 20 }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reviews.map((r, i) => (
+              <div
+                key={r.name}
+                id={`rev-${i}`}
+                data-animate
+                className={`bg-dark-card rounded-2xl p-6 transition-all duration-500 ${visibleItems.has(`rev-${i}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                <div className="flex gap-1 mb-4">
                   {Array(r.stars).fill(0).map((_, j) => (
-                    <Icon key={j} name="Star" size={14} style={{ color: i % 2 === 0 ? "#E8C84A" : "#0A0A0A" }} />
+                    <Icon key={j} name="Star" size={16} className="text-orange-400 fill-orange-400" />
                   ))}
                 </div>
-                <p style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 18, lineHeight: 1.6, color: i % 2 === 0 ? "#ddd" : "#0A0A0A", marginBottom: 32 }}>
-                  «{r.text}»
-                </p>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 40, height: 40, border: `2px solid ${i % 2 === 0 ? "#E8C84A" : "#0A0A0A"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Oswald', sans-serif", fontSize: 18, fontWeight: 700, color: i % 2 === 0 ? "#E8C84A" : "#0A0A0A" }}>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">«{r.text}»</p>
+                <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div className="w-10 h-10 rounded-full bg-fire flex items-center justify-center font-oswald font-bold text-white text-sm">
                     {r.name.charAt(0)}
                   </div>
                   <div>
-                    <div style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: 15, color: i % 2 === 0 ? "#fff" : "#0A0A0A" }}>{r.name}</div>
-                    <div style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 12, color: i % 2 === 0 ? "#555" : "#555" }}>{r.car}</div>
+                    <div className="font-semibold text-white text-sm">{r.name}</div>
+                    <div className="text-gray-500 text-xs">{r.car}</div>
                   </div>
                 </div>
               </div>
@@ -330,64 +335,55 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── CONTACTS ── */}
-      <section id="contacts" style={{ background: "#F5F0E8", padding: "100px 24px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div id="cnt-head" data-reveal style={{
-            marginBottom: 60,
-            opacity: vis("cnt-head") ? 1 : 0, transform: vis("cnt-head") ? "none" : "translateY(30px)", transition: "all 0.7s",
-          }}>
-            <div style={{ color: "#888", fontSize: 11, fontWeight: 700, letterSpacing: "0.25em", marginBottom: 12, fontFamily: "'Golos Text', sans-serif" }}>КАК НАС НАЙТИ</div>
-            <h2 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(48px,6vw,80px)", fontWeight: 700, lineHeight: 0.95, letterSpacing: "-0.02em" }}>
-              КОН<span style={{ WebkitTextStroke: "2px #0A0A0A", color: "transparent" }}>ТАКТЫ</span>
-            </h2>
+      {/* MAP & CONTACTS */}
+      <section id="contacts" className="py-24" style={{ background: "var(--dark)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div id="contacts-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("contacts-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Приезжайте к нам</div>
+            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">КОН<span className="text-gradient">ТАКТЫ</span></h2>
+            <p className="text-gray-400 text-lg">Найти нас очень легко</p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 4 }}>
-            {/* Info */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+            <div className="lg:col-span-2 flex flex-col gap-5">
               {[
-                { icon: "MapPin", label: "АДРЕС", val: "Москва, ул. Автомобильная, 15", sub: "м. Автозаводская" },
-                { icon: "Phone", label: "ТЕЛЕФОН", val: "+7 (900) 123-45-67", sub: "8:00–22:00 без выходных" },
-                { icon: "Clock", label: "ВРЕМЯ", val: "Пн–Вс 8:00–22:00", sub: "Без выходных" },
-                { icon: "MessageCircle", label: "МЕССЕНДЖЕРЫ", val: "WhatsApp / Telegram", sub: "Ответим за 5 минут" },
+                { icon: "MapPin", title: "Адрес", val: "Москва, ул. Автомобильная, д. 15", val2: "м. Автозаводская, 5 мин пешком" },
+                { icon: "Phone", title: "Телефон", val: "+7 (900) 123-45-67", val2: "Принимаем звонки 8:00–22:00" },
+                { icon: "Clock", title: "Режим работы", val: "Пн–Вс: 8:00 – 22:00", val2: "Без выходных и праздников" },
+                { icon: "MessageCircle", title: "WhatsApp / Telegram", val: "+7 (900) 123-45-67", val2: "Ответим в течение 5 минут" },
               ].map((item) => (
-                <div key={item.label} style={{ background: "#0A0A0A", padding: "20px 24px", display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <Icon name={item.icon} size={18} style={{ color: "#E8C84A", flexShrink: 0, marginTop: 2 }} />
+                <div key={item.title} className="bg-dark-card rounded-2xl p-5 flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-fire flex-shrink-0 flex items-center justify-center">
+                    <Icon name={item.icon} size={20} className="text-white" />
+                  </div>
                   <div>
-                    <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: 10, letterSpacing: "0.2em", color: "#555", marginBottom: 4 }}>{item.label}</div>
-                    <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: 17, fontWeight: 600, color: "#F5F0E8" }}>{item.val}</div>
-                    <div style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 12, color: "#555" }}>{item.sub}</div>
+                    <div className="text-gray-400 text-xs uppercase tracking-wider mb-1">{item.title}</div>
+                    <div className="font-semibold text-white">{item.val}</div>
+                    <div className="text-gray-500 text-sm">{item.val2}</div>
                   </div>
                 </div>
               ))}
 
-              <a href="https://yandex.ru/maps/?rtext=~55.730051,37.661042&rtt=auto" target="_blank" rel="noopener noreferrer"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
-                  background: "#E8C84A", padding: "18px", border: "2px solid #0A0A0A",
-                  fontFamily: "'Oswald', sans-serif", fontSize: 15, fontWeight: 700, letterSpacing: "0.1em",
-                  textDecoration: "none", color: "#0A0A0A",
-                  boxShadow: "4px 4px 0 #0A0A0A", transition: "all 0.15s",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translate(-3px,-3px)"; e.currentTarget.style.boxShadow = "7px 7px 0 #0A0A0A"; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "4px 4px 0 #0A0A0A"; }}>
-                <Icon name="Navigation" size={18} />
-                ПОСТРОИТЬ МАРШРУТ
+              <a
+                href="https://yandex.ru/maps/?rtext=~55.730051,37.661042&rtt=auto"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-fire px-6 py-4 rounded-xl text-white font-bold text-base hover-glow transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 mt-2"
+              >
+                <Icon name="Navigation" size={20} />
+                Построить маршрут
               </a>
             </div>
 
-            {/* Map */}
-            <div id="map-c" data-reveal style={{
-              overflow: "hidden", border: "2px solid #0A0A0A",
-              boxShadow: "8px 8px 0 #0A0A0A",
-              opacity: vis("map-c") ? 1 : 0, transition: "all 0.8s",
-            }}>
+            <div id="map-block" data-animate className={`lg:col-span-3 rounded-2xl overflow-hidden transition-all duration-700 ${visibleItems.has("map-block") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              style={{ border: "2px solid rgba(249,115,22,0.25)", height: "460px" }}>
               <iframe
                 src="https://yandex.ru/map-widget/v1/?ll=37.661042%2C55.730051&z=15&l=map&pt=37.661042%2C55.730051%2Cpm2rdl"
-                width="100%" height="500"
-                frameBorder="0" title="Карта"
-                style={{ border: "none", display: "block", filter: "grayscale(30%) contrast(1.1)" }}
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                title="Карта — Шиномонтаж У Рустама"
+                style={{ border: "none", filter: "invert(0.9) hue-rotate(180deg) saturate(0.8)" }}
                 allowFullScreen
               />
             </div>
@@ -395,73 +391,45 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section style={{ background: "#E8C84A", padding: "80px 24px", borderTop: "2px solid #0A0A0A", borderBottom: "2px solid #0A0A0A", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", right: -60, top: "50%", transform: "translateY(-50%)", opacity: 0.07, pointerEvents: "none" }}>
-          <Icon name="Settings" size={400} />
+      {/* CTA BANNER */}
+      <section className="py-20 relative overflow-hidden bg-fire">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full border-4 border-white -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full border-4 border-white translate-x-1/3 translate-y-1/3" />
         </div>
-        <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 2 }}>
-          <h2 style={{ fontFamily: "'Oswald', sans-serif", fontSize: "clamp(44px,6vw,80px)", fontWeight: 700, lineHeight: 0.95, letterSpacing: "-0.02em", marginBottom: 24 }}>
-            ЗВОНИТЕ —<br />ПРИЕЗЖАЙТЕ
-          </h2>
-          <p style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 18, color: "#555", marginBottom: 40 }}>
-            Примем без записи. Сделаем быстро.
-          </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="tel:+79001234567" style={{
-              display: "inline-flex", alignItems: "center", gap: 10,
-              background: "#0A0A0A", color: "#E8C84A", padding: "16px 36px",
-              fontFamily: "'Oswald', sans-serif", fontSize: 18, fontWeight: 700, letterSpacing: "0.05em",
-              textDecoration: "none", border: "2px solid #0A0A0A",
-              boxShadow: "5px 5px 0 rgba(0,0,0,0.3)", transition: "all 0.15s",
-            }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translate(-3px,-3px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "none"; }}>
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="font-oswald text-4xl sm:text-5xl font-bold text-white mb-4">ЗАПИШИТЕСЬ ПРЯМО СЕЙЧАС</h2>
+          <p className="text-orange-100 text-lg mb-8 max-w-xl mx-auto">Позвоните или напишите — ответим мгновенно и подберём удобное время</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="tel:+79001234567"
+              className="bg-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2"
+              style={{ color: "#f97316" }}>
               <Icon name="Phone" size={20} />
-              +7 (900) 123-45-67
+              Позвонить
             </a>
-            <a href="https://wa.me/79001234567" style={{
-              display: "inline-flex", alignItems: "center", gap: 10,
-              background: "transparent", color: "#0A0A0A", padding: "16px 36px",
-              fontFamily: "'Oswald', sans-serif", fontSize: 18, fontWeight: 700, letterSpacing: "0.05em",
-              textDecoration: "none", border: "2px solid #0A0A0A",
-              transition: "all 0.15s",
-            }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#0A0A0A"; e.currentTarget.style.color = "#E8C84A"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#0A0A0A"; }}>
+            <a href="https://wa.me/79001234567"
+              className="px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-2 text-white"
+              style={{ border: "2px solid rgba(255,255,255,0.6)", background: "transparent" }}>
               <Icon name="MessageCircle" size={20} />
-              НАПИСАТЬ
+              WhatsApp
             </a>
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer style={{ background: "#0A0A0A", padding: "28px 24px", borderTop: "2px solid #1a1a1a" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-          <span style={{ fontFamily: "'Oswald', sans-serif", fontWeight: 700, fontSize: 18, color: "#F5F0E8" }}>
-            У <span style={{ color: "#E8C84A" }}>РУСТАМА</span>
-          </span>
-          <span style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 13, color: "#444" }}>© 2024 Шиномонтаж «У Рустама»</span>
-          <span style={{ fontFamily: "'Golos Text', sans-serif", fontSize: 13, color: "#444" }}>Москва, ул. Автомобильная, 15</span>
+      {/* FOOTER */}
+      <footer className="py-8" style={{ background: "#0a0a0a", borderTop: "1px solid rgba(249,115,22,0.15)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-fire flex items-center justify-center">
+              <Icon name="Settings" size={14} className="text-white" />
+            </div>
+            <span className="font-oswald font-bold">У <span className="text-gradient">РУСТАМА</span></span>
+          </div>
+          <p className="text-gray-600 text-sm">© 2024 Шиномонтаж «У Рустама». Все права защищены.</p>
+          <p className="text-gray-600 text-sm">Москва, ул. Автомобильная, 15</p>
         </div>
       </footer>
-
-      <style>{`
-        @keyframes ticker {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.3; }
-        }
-        @media (max-width: 768px) {
-          #hero { grid-template-columns: 1fr !important; }
-          #hero > div:last-child { display: none; }
-          .hidden { display: none !important; }
-        }
-      `}</style>
     </div>
   );
 }
