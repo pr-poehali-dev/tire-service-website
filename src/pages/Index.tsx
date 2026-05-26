@@ -49,6 +49,69 @@ const stats = [
   { val: "100%", label: "гарантия качества" },
 ];
 
+const promos = [
+  {
+    badge: "🔥 Хит",
+    title: "Сезонная замена «Всё включено»",
+    desc: "Замена 4 колёс + балансировка + подкачка азотом",
+    old: "2 000 ₽",
+    price: "1 500 ₽",
+    saving: "Экономия 500 ₽",
+    until: "до 30 июня",
+    color: "#f97316",
+  },
+  {
+    badge: "⚡ Быстро",
+    title: "Экспресс-монтаж за 20 минут",
+    desc: "Замена 4 колёс до R18 без очереди по записи",
+    old: "1 200 ₽",
+    price: "900 ₽",
+    saving: "Экономия 300 ₽",
+    until: "постоянная",
+    color: "#3b82f6",
+  },
+  {
+    badge: "🎁 Новым",
+    title: "Скидка 15% для новых клиентов",
+    desc: "На любую услугу при первом обращении",
+    old: null,
+    price: "−15%",
+    saving: "На первый визит",
+    until: "бессрочно",
+    color: "#22c55e",
+  },
+  {
+    badge: "❄️ Зима",
+    title: "Зимний комплект под ключ",
+    desc: "Замена + балансировка + хранение летней резины (1 мес)",
+    old: "3 800 ₽",
+    price: "2 900 ₽",
+    saving: "Экономия 900 ₽",
+    until: "с 1 октября",
+    color: "#a855f7",
+  },
+  {
+    badge: "🚗 Авто+",
+    title: "Развал + балансировка",
+    desc: "Развал-схождение 2 оси + балансировка всех колёс",
+    old: "2 900 ₽",
+    price: "2 200 ₽",
+    saving: "Экономия 700 ₽",
+    until: "до 15 июля",
+    color: "#f97316",
+  },
+  {
+    badge: "💼 Корп.",
+    title: "Корпоративный договор",
+    desc: "Обслуживание парка от 5 авто — индивидуальные цены",
+    old: null,
+    price: "−20%",
+    saving: "На весь парк",
+    until: "бессрочно",
+    color: "#eab308",
+  },
+];
+
 export default function Index() {
   const [activeSection, setActiveSection] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,6 +142,7 @@ export default function Index() {
     { id: "home", label: "Главная" },
     { id: "services", label: "Услуги" },
     { id: "prices", label: "Прайс" },
+    { id: "promos", label: "Акции" },
     { id: "portfolio", label: "Портфолио" },
     { id: "reviews", label: "Отзывы" },
     { id: "contacts", label: "Контакты" },
@@ -264,8 +328,69 @@ export default function Index() {
         </div>
       </section>
 
+      {/* PROMOS */}
+      <section id="promos" className="py-24" style={{ background: "var(--dark)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div id="promos-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("promos-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+            <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Выгодные предложения</div>
+            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">АК<span className="text-gradient">ЦИИ</span></h2>
+            <p className="text-gray-400 text-lg">Специальные цены и комплексные предложения</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {promos.map((promo, i) => (
+              <div
+                key={promo.title}
+                id={`promo-${i}`}
+                data-animate
+                className={`relative rounded-2xl p-6 flex flex-col transition-all duration-500 hover:scale-105 hover-glow ${visibleItems.has(`promo-${i}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                style={{
+                  background: "var(--dark-2)",
+                  border: `1px solid ${promo.color}33`,
+                  transitionDelay: `${i * 80}ms`,
+                }}
+              >
+                {/* Top stripe */}
+                <div className="absolute top-0 left-0 right-0 h-1 rounded-t-2xl" style={{ background: promo.color }} />
+
+                <div className="flex items-start justify-between mb-4">
+                  <span className="text-sm font-semibold px-3 py-1 rounded-full" style={{ background: `${promo.color}22`, color: promo.color }}>
+                    {promo.badge}
+                  </span>
+                  <span className="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded-full">{promo.until}</span>
+                </div>
+
+                <h3 className="font-oswald text-xl font-bold mb-2 leading-tight">{promo.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">{promo.desc}</p>
+
+                <div className="flex items-end justify-between pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div>
+                    {promo.old && (
+                      <div className="text-gray-600 text-sm line-through mb-0.5">{promo.old}</div>
+                    )}
+                    <div className="font-oswald text-3xl font-bold" style={{ color: promo.color }}>{promo.price}</div>
+                  </div>
+                  <div className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: `${promo.color}22`, color: promo.color }}>
+                    {promo.saving}
+                  </div>
+                </div>
+
+                <a
+                  href="tel:+79001234567"
+                  className="mt-4 flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90"
+                  style={{ background: promo.color, color: "#fff" }}
+                >
+                  <Icon name="Phone" size={16} />
+                  Воспользоваться
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* PORTFOLIO */}
-      <section id="portfolio" className="py-24" style={{ background: "var(--dark)" }}>
+      <section id="portfolio" className="py-24" style={{ background: "var(--dark-2)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div id="portfolio-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("portfolio-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div className="text-orange-500 font-semibold text-sm uppercase tracking-widest mb-3">Наши работы</div>
