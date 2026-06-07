@@ -144,8 +144,6 @@ export default function Index() {
     { id: "services", label: "Услуги" },
     { id: "prices", label: "Прайс" },
     { id: "promos", label: "Акции" },
-    { id: "portfolio", label: "Портфолио" },
-    { id: "reviews", label: "Отзывы" },
     { id: "contacts", label: "Контакты" },
   ];
 
