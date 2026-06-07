@@ -216,7 +216,7 @@ export default function Index() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
               style={{ background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.4)", color: "#ef4444" }}>
-              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               Открыто сейчас · Пн–Вс 9:00–22:00
             </div>
 
@@ -591,9 +591,7 @@ export default function Index() {
       <footer className="py-8" style={{ background: "#0a0a0a", borderTop: "1px solid rgba(220,38,38,0.15)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full bg-fire flex items-center justify-center">
-              <Icon name="Settings" size={14} className="text-white" />
-            </div>
+            <img src="https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/bucket/09303b50-2699-4c79-bbd3-b4c97fa97b02.png" alt="У Рустама" className="w-9 h-9 object-contain" />
             <span className="font-oswald font-bold">У <span className="text-gradient">РУСТАМА</span></span>
           </div>
           <p className="text-gray-600 text-sm">© 2024 Шиномонтаж «У Рустама». Все права защищены.</p>
