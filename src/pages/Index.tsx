@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
-const HERO_IMAGE = "https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/files/6899abdc-1585-434d-8497-d3453a4a1c85.jpg";
-const TIRE_IMAGE = "https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/files/937a2fda-c6e8-43d1-89e4-e49b84022139.jpg";
 
 const services = [
   { icon: "Wrench", title: "Замена шин", desc: "Сезонная смена резины за 30 минут", price: "от 800 ₽" },
@@ -13,35 +11,25 @@ const services = [
   { icon: "UserCheck", title: "Самосервис", desc: "Используй наш подъёмник и инструменты самостоятельно", price: "от 500 ₽" },
 ];
 
-const prices = [
+const pricesTire = [
   { name: "Замена R13–R15", price: "800 ₽", per: "4 колеса" },
   { name: "Замена R16–R18", price: "1 200 ₽", per: "4 колеса" },
   { name: "Замена R19–R21", price: "1 600 ₽", per: "4 колеса" },
   { name: "Балансировка", price: "400 ₽", per: "1 колесо" },
   { name: "Ремонт прокола", price: "300 ₽", per: "1 колесо" },
-  { name: "Развал-схождение", price: "1 500 ₽", per: "2 оси" },
   { name: "Хранение шин", price: "2 400 ₽", per: "сезон" },
   { name: "Подкачка азотом", price: "150 ₽", per: "1 колесо" },
+];
+
+const pricesAuto = [
   { name: "Самосервис", price: "500 ₽", per: "час" },
+  { name: "Диагностика", price: "от 500 ₽", per: "авто" },
+  { name: "Замена масла", price: "от 500 ₽", per: "авто" },
+  { name: "Замена тормозных колодок", price: "от 800 ₽", per: "ось" },
+  { name: "Замена фильтров", price: "от 300 ₽", per: "шт" },
+  { name: "Развал-схождение", price: "1 500 ₽", per: "2 оси" },
 ];
 
-const reviews = [
-  { name: "Алексей П.", stars: 5, text: "Приехал без записи, обслужили за 25 минут. Ребята профессионалы, всё чисто и аккуратно!", car: "Toyota Camry" },
-  { name: "Марина С.", stars: 5, text: "Третий год езжу только сюда на сезонную смену. Цены честные, качество отличное. Рекомендую всем!", car: "Kia Sportage" },
-  { name: "Дмитрий В.", stars: 5, text: "Поймал гвоздь в центре города, заехал к Рустаму — за 15 минут починили и отпустили. Спасибо огромное!", car: "BMW 3 Series" },
-  { name: "Ольга К.", stars: 5, text: "Хранение шин — отличный сервис. Всегда в идеальном состоянии возвращают. Персонал очень вежливый.", car: "Volkswagen Polo" },
-  { name: "Игорь М.", stars: 5, text: "Развал-схождение сделали идеально, машина стала держать дорогу гораздо лучше. Отличная работа!", car: "Lada Vesta" },
-  { name: "Наталья Р.", stars: 5, text: "Обратилась первый раз — осталась в полном восторге! Быстро, дёшево и главное качественно.", car: "Hyundai Creta" },
-];
-
-const portfolio = [
-  { title: "Замена летней резины", desc: "BMW X5, R20", img: TIRE_IMAGE },
-  { title: "Балансировка дисков", desc: "Mercedes GLE, R21", img: HERO_IMAGE },
-  { title: "Ремонт прокола", desc: "Toyota RAV4, R17", img: TIRE_IMAGE },
-  { title: "Развал-схождение", desc: "Volkswagen Tiguan, R18", img: HERO_IMAGE },
-  { title: "Хранение комплекта", desc: "Kia Sportage, R18", img: TIRE_IMAGE },
-  { title: "Подкачка азотом", desc: "Lada Vesta Sport, R16", img: HERO_IMAGE },
-];
 
 const stats = [
   { val: "5 лет", label: "на рынке" },
@@ -303,22 +291,58 @@ export default function Index() {
             <p className="text-gray-400 text-lg">Честные цены без скрытых доплат</p>
           </div>
 
-          <div id="prices-table" data-animate className={`rounded-2xl overflow-hidden transition-all duration-700 ${visibleItems.has("prices-table") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-            style={{ border: "1px solid rgba(220,38,38,0.2)" }}>
-            {prices.map((p, i) => (
-              <div key={p.name}
-                className="flex items-center justify-between px-6 py-4 hover:bg-red-500/5 transition-colors duration-200"
-                style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.01)", borderBottom: i < prices.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-fire" />
-                  <span className="font-medium text-white">{p.name}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Шиномонтаж */}
+            <div id="prices-tire" data-animate className={`transition-all duration-700 ${visibleItems.has("prices-tire") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 rounded-xl bg-fire flex items-center justify-center">
+                  <Icon name="CircleDot" size={18} className="text-white" />
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-gray-500 text-sm">{p.per}</span>
-                  <span className="font-oswald text-xl font-bold text-red-400 min-w-[100px] text-right">{p.price}</span>
-                </div>
+                <h3 className="font-oswald text-2xl font-bold">ШИНО<span className="text-gradient">МОНТАЖ</span></h3>
               </div>
-            ))}
+              <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(220,38,38,0.2)" }}>
+                {pricesTire.map((p, i) => (
+                  <div key={p.name}
+                    className="flex items-center justify-between px-5 py-3.5 hover:bg-red-500/5 transition-colors duration-200"
+                    style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.01)", borderBottom: i < pricesTire.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-fire flex-shrink-0" />
+                      <span className="font-medium text-white">{p.name}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-gray-500 text-sm">{p.per}</span>
+                      <span className="font-oswald text-lg font-bold text-red-400 min-w-[90px] text-right">{p.price}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Автосервис */}
+            <div id="prices-auto" data-animate className={`transition-all duration-700 ${visibleItems.has("prices-auto") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-9 h-9 rounded-xl bg-fire flex items-center justify-center">
+                  <Icon name="Wrench" size={18} className="text-white" />
+                </div>
+                <h3 className="font-oswald text-2xl font-bold">АВТО<span className="text-gradient">СЕРВИС</span></h3>
+              </div>
+              <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(220,38,38,0.2)" }}>
+                {pricesAuto.map((p, i) => (
+                  <div key={p.name}
+                    className="flex items-center justify-between px-5 py-3.5 hover:bg-red-500/5 transition-colors duration-200"
+                    style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "rgba(255,255,255,0.01)", borderBottom: i < pricesAuto.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-fire flex-shrink-0" />
+                      <span className="font-medium text-white">{p.name}</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-gray-500 text-sm">{p.per}</span>
+                      <span className="font-oswald text-lg font-bold text-red-400 min-w-[90px] text-right">{p.price}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="mt-8 text-center">
@@ -392,76 +416,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* PORTFOLIO */}
-      <section id="portfolio" className="py-24" style={{ background: "var(--dark-2)" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div id="portfolio-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("portfolio-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Наши работы</div>
-            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ПОРТ<span className="text-gradient">ФОЛИО</span></h2>
-            <p className="text-gray-400 text-lg">Примеры выполненных работ за последний месяц</p>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {portfolio.map((item, i) => (
-              <div
-                key={item.title}
-                id={`port-${i}`}
-                data-animate
-                className={`group rounded-2xl overflow-hidden transition-all duration-500 hover:scale-105 ${visibleItems.has(`port-${i}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ border: "1px solid rgba(220,38,38,0.15)", transitionDelay: `${i * 80}ms` }}
-              >
-                <div className="relative overflow-hidden h-48">
-                  <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%)" }} />
-                </div>
-                <div className="p-4" style={{ background: "var(--dark-2)" }}>
-                  <h3 className="font-oswald text-lg font-bold">{item.title}</h3>
-                  <p className="text-gray-400 text-sm mt-1">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section id="reviews" className="py-24" style={{ background: "var(--dark-2)" }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div id="reviews-title" data-animate className={`text-center mb-16 transition-all duration-700 ${visibleItems.has("reviews-title") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            <div className="text-red-500 font-semibold text-sm uppercase tracking-widest mb-3">Клиенты говорят</div>
-            <h2 className="font-oswald text-4xl sm:text-5xl font-bold mb-4">ОТ<span className="text-gradient">ЗЫВЫ</span></h2>
-            <p className="text-gray-400 text-lg">Реальные отзывы наших клиентов</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((r, i) => (
-              <div
-                key={r.name}
-                id={`rev-${i}`}
-                data-animate
-                className={`bg-dark-card rounded-2xl p-6 transition-all duration-500 ${visibleItems.has(`rev-${i}`) ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <div className="flex gap-1 mb-4">
-                  {Array(r.stars).fill(0).map((_, j) => (
-                    <Icon key={j} name="Star" size={16} className="text-red-400 fill-red-400" />
-                  ))}
-                </div>
-                <p className="text-gray-300 text-sm leading-relaxed mb-4">«{r.text}»</p>
-                <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div className="w-10 h-10 rounded-full bg-fire flex items-center justify-center font-oswald font-bold text-white text-sm">
-                    {r.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-white text-sm">{r.name}</div>
-                    <div className="text-gray-500 text-xs">{r.car}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* MAP & CONTACTS */}
       <section id="contacts" className="py-24" style={{ background: "var(--dark)" }}>
