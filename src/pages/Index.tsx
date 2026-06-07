@@ -154,9 +154,7 @@ export default function Index() {
       <nav className="fixed top-0 left-0 right-0 z-50" style={{ background: "rgba(15,15,15,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(220,38,38,0.2)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
           <button onClick={() => scrollTo("home")} className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-fire flex items-center justify-center">
-              <Icon name="Settings" size={16} className="text-white animate-spin-slow" />
-            </div>
+            <img src="https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/bucket/09303b50-2699-4c79-bbd3-b4c97fa97b02.png" alt="У Рустама" className="w-10 h-10 object-contain" />
             <span className="font-oswald text-xl font-bold tracking-wide">
               У <span className="text-gradient">РУСТАМА</span>
             </span>
@@ -222,11 +220,17 @@ export default function Index() {
               Открыто сейчас · Пн–Вс 9:00–22:00
             </div>
 
-            <h1 className="font-oswald text-5xl sm:text-6xl md:text-7xl font-bold leading-none mb-6 animate-fade-in"
-              style={{ animationFillMode: "forwards" }}>
-              ШИНОМОНТАЖ<br />
-              <span className="text-gradient">«У РУСТАМА»</span>
-            </h1>
+            <div className="flex items-center gap-5 mb-6 animate-fade-in" style={{ animationFillMode: "forwards" }}>
+              <img
+                src="https://cdn.poehali.dev/projects/cd77c19b-1bb8-44cb-9dc5-ad1e8637d438/bucket/09303b50-2699-4c79-bbd3-b4c97fa97b02.png"
+                alt="Логотип У Рустама"
+                className="w-24 h-24 sm:w-32 sm:h-32 object-contain drop-shadow-lg flex-shrink-0"
+              />
+              <h1 className="font-oswald text-5xl sm:text-6xl md:text-7xl font-bold leading-none">
+                ШИНОМОНТАЖ<br />
+                <span className="text-gradient">«У РУСТАМА»</span>
+              </h1>
+            </div>
 
             <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-xl leading-relaxed animate-fade-in animate-delay-200"
               style={{ animationFillMode: "forwards" }}>
