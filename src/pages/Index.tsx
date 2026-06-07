@@ -505,6 +505,10 @@ export default function Index() {
               <div>
                 <h3 className="font-oswald text-2xl font-bold">АВТОСЕРВИС <span className="text-gradient">У РУСТАМА</span></h3>
                 <p className="text-gray-400 text-sm">Ржевская ул., 2Б, Санкт-Петербург</p>
+                <div className="flex gap-2 mt-1.5">
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.4)", color: "#ef4444" }}>Автосервис</span>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.4)", color: "#ef4444" }}>Самосервис</span>
+                </div>
               </div>
               <a
                 href="https://yandex.ru/maps/?text=Ржевская+ул.+2Б+Санкт-Петербург&rtt=auto"
